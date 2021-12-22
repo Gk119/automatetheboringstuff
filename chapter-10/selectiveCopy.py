@@ -1,16 +1,25 @@
-import os
+import os, shutil, re
 import pathlib
 
 print(pathlib.Path.home())
-print(os.getcwd())
+cwd = os.getcwd()
+dest = cwd + '/dest'
 
-for folderName, subfolders, filenames in os.walk(os.getcwd()):
-    print('The current folder is ' + folderName)
+#os.mkdir(dest)
 
-    for subfolder in subfolders:
-        print('SUBFOLDER OF ' + folderName + ': ' + subfolder)
+reg = re.compile('.*?(\.pdf|\.jpg)')
+
+for folderName, subfolders, filenames in os.walk(cwd):
+    #print('The current folder is ' + folderName)
+
+    #for subfolder in subfolders:
+    #   print('SUBFOLDER OF ' + folderName + ': ' + subfolder)
 
     for filename in filenames:
-        print('FILE INSIDE ' + folderName + ': '+ filename)
+        mf = reg.search(filename)
+        #print(mf)
+        if mf != None:
+            print('FILE INSIDE ' + folderName + ': '+ filename)
+
 
     print('')
