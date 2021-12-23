@@ -1,25 +1,32 @@
 import os, shutil, re
 import pathlib
 
-print(pathlib.Path.home())
+#print(pathlib.Path.home())
 cwd = os.getcwd()
 dest = cwd + '/dest'
 
-#os.mkdir(dest)
+source = input("Enter the source folder path: ")
+ext = input("Enter the extensions(with the '.') separated by space: ")
+ext = ext.split()
+regex = "(\\" + "|\\".join(ext) + ")$"
 
-reg = re.compile('.*?(\.pdf|\.jpg)')
+filelist = []
 
-for folderName, subfolders, filenames in os.walk(cwd):
-    #print('The current folder is ' + folderName)
+reg = re.compile(regex)
 
-    #for subfolder in subfolders:
-    #   print('SUBFOLDER OF ' + folderName + ': ' + subfolder)
+for folderName, subfolders, filenames in os.walk(source):
 
     for filename in filenames:
         mf = reg.search(filename)
-        #print(mf)
-        if mf != None:
+        if mf:
             print('FILE INSIDE ' + folderName + ': '+ filename)
+            filelist.append(folderName + '/' + filename)
 
+if not pathlib.Path(dest).is_dir():
+    os.mkdir(dest)
 
-    print('')
+print("Copying files to " + dest)
+for file in filelist:
+    shutil.copy(file,dest)
+
+print("Copying succesful")
