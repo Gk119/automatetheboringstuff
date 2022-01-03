@@ -10,3 +10,4 @@ while True:
     htmlElem.send_keys(Keys.DOWN)
     htmlElem.send_keys(Keys.LEFT)     
     htmlElem.send_keys(Keys.UP)
+    
